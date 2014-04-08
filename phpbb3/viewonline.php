@@ -2,7 +2,7 @@
 /**
 *
 * @package phpBB3
-* @version $Id: viewonline.php 9566 2009-06-09 15:52:03Z bantu $
+* @version $Id$
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -315,10 +315,12 @@ while ($row = $db->sql_fetchrow($result))
 			$location_url = append_sid("{$phpbb_root_path}index.$phpEx");
 		break;
 
+		// [+] phpBB3 PortalXL
 		case 'portal':
 			$location = $user->lang['VIEWING_PORTAL'];
 			$location_url = append_sid("{$phpbb_root_path}portal.$phpEx");
 		break;
+		// [+] phpBB3 PortalXL
 
 		default:
 			$location = $user->lang['INDEX'];
@@ -404,7 +406,6 @@ $legend = '';
 while ($row = $db->sql_fetchrow($result))
 {
 	if ($row['group_name'] == 'BOTS')
-
 	{
 		$legend .= (($legend != '') ? ', ' : '') . '<span style="color:#' . $row['group_colour'] . '">' . $user->lang['G_BOTS'] . '</span>';
 	}

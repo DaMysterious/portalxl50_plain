@@ -1614,8 +1614,10 @@ class user extends session
 		$this->add_lang($lang_set);
 		unset($lang_set);
 
+		// [+] phpBB3 PortalXL
 		// if (!empty($_GET['style']) && $auth->acl_get('a_styles') && !defined('ADMIN_START'))
 		if (!empty($_GET['style'])) 
+		// [-] phpBB3 PortalXL
 		{
 			global $SID, $_EXTRA_URL;
 

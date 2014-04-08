@@ -141,16 +141,19 @@ else
 	}
 }
 
+// [+] phpBB3 PortalXL
 if (defined('PORTAL_INDEX_PAGE'))
 {
 	include($phpbb_root_path . 'portal/includes/functions.'.$phpEx);
 	include_once($phpbb_root_path . 'portal/includes/viewforum_blocks.' . $phpEx);
 	include_once($phpbb_root_path . 'portal/includes/functions_blocks_index.' . $phpEx);
 }
+// [-] phpBB3 PortalXL
 
 // Dump out the page header and load viewforum template
 page_header($user->lang['VIEW_FORUM'] . ' - ' . $forum_data['forum_name'], true, $forum_id);
 
+// [+] phpBB3 PortalXL
 // $template->set_filenames(array(
 // 	'body' => 'viewforum_body.html')
 // );
@@ -170,6 +173,7 @@ else
 		'body' => 'viewforum_body.html',
 		));
 }
+// [-] phpBB3 PortalXL
 
 make_jumpbox(append_sid("{$phpbb_root_path}viewforum.$phpEx"), $forum_id);
 

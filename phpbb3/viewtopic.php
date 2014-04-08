@@ -46,11 +46,13 @@ $update		= request_var('update', false);
 
 $s_can_vote = false;
 
+// [+] phpBB3 PortalXL
 if (defined('PORTAL_INDEX_PAGE')) {
 	include($phpbb_root_path . 'portal/includes/functions.'.$phpEx);
 	include_once($phpbb_root_path . 'portal/includes/viewforum_blocks.' . $phpEx);
 	include_once($phpbb_root_path . 'portal/includes/functions_blocks_index.' . $phpEx);
 }
+// [-] phpBB3 PortalXL
 
 /**
 * @todo normalize?
@@ -625,6 +627,7 @@ if (!empty($_EXTRA_URL))
 	}
 }
 
+// [+] phpBB3 PortalXL
 // Start output Addvertisements
 $active = ($user->data['user_id'] != ANONYMOUS) ? '1' : '3';
 $adds_id = '';
@@ -666,6 +669,7 @@ $template->assign_vars(array(
 	'ADVERTISEMENT_NAME4'  	=> isset($addsname[4]) ? $addsname[4] : '',
 	));
 // End output Addvertisements
+// [-] phpBB3 PortalXL
 
 // Send vars to template
 $template->assign_vars(array(
@@ -1184,8 +1188,10 @@ while ($row = $db->sql_fetchrow($result))
 			// We add the signature to every posters entry because enable_sig is post dependant
 			if ($row['user_sig'] && $config['allow_sig'] && $user->optionget('viewsigs'))
 			{
+				// [+] phpBB3 PortalXL
 				$user_sig = $row['user_sig'];
 				// $user_sig ='<fieldset style="border: 1px solid #D7D7D7; margin: 15px 0; padding: 10px;"><legend>'.$user->lang['SIGNATURE'].'</legend>'.$row ['user_sig'].'</fieldset>';
+				// [-] phpBB3 PortalXL
 			}
 
 			$id_cache[] = $poster_id;
@@ -1437,11 +1443,13 @@ for ($i = 0, $end = sizeof($post_list); $i < $end; ++$i)
 	// Parse the message and subject
 	$message = censor_text($row['post_text']);
 
-    if ($portal_config['portal_acronyms_allow'] == true)
-    {
+	// [+] phpBB3 PortalXL
+    	if ($portal_config['portal_acronyms_allow'] == true)
+    	{
 		include_once($phpbb_root_path . 'portal/includes/functions_acronym.' . $phpEx);
-    	$message = acronym_pass($message);
-    }
+    		$message = acronym_pass($message);
+    	}
+	// [+] phpBB3 PortalXL
 
 	// Second parse bbcode here
 	if ($row['bbcode_bitfield'])
@@ -1837,6 +1845,11 @@ if (empty($_REQUEST['t']) && !empty($topic_id))
 // Output the page
 page_header($user->lang['VIEW_TOPIC'] . ' - ' . $topic_data['topic_title'], true, $forum_id);
 
+// [+] phpBB3 PortalXL
+//$template->set_filenames(array(
+//	'body' => ($view == 'print') ? 'viewtopic_print.html' : 'viewtopic_body.html')
+//);
+
 /*
 * switch template if the portal index/viewtopic is active
 */
@@ -1852,6 +1865,7 @@ else
 		'body' => ($view == 'print') ? 'viewtopic_print.html' : 'viewtopic_body.html',
 		));
 }
+// [-] phpBB3 PortalXL
 
 make_jumpbox(append_sid("{$phpbb_root_path}viewforum.$phpEx"), $forum_id);
 

@@ -93,6 +93,7 @@ switch ($mode)
 			$message = ($user->data['user_id'] == ANONYMOUS) ? $user->lang['LOGOUT_REDIRECT'] : $user->lang['LOGOUT_FAILED'];
 		}
 
+	// [+] phpBB3 PortalXL
      	if(defined('PORTAL'))
       	{
 			$user->setup('mods/portal_xl');
@@ -105,6 +106,7 @@ switch ($mode)
 			meta_refresh(3, append_sid("{$phpbb_root_path}index.$phpEx"));
 			$message = $message . '<br /><br />' . sprintf($user->lang['RETURN_INDEX'], '<a href="' . append_sid("{$phpbb_root_path}index.$phpEx") . '">', '</a> ');
 		}
+	// [-] phpBB3 PortalXL
 
 		$message = $message . '<br /><br />' . sprintf($user->lang['RETURN_INDEX'], '<a href="' . append_sid("{$phpbb_root_path}index.$phpEx") . '">', '</a> ');
 		trigger_error($message);
@@ -332,12 +334,14 @@ if (!$config['allow_topic_notify'] && !$config['allow_forum_notify'])
 	$module->set_display('main', 'subscribed', false);
 }
 
+// [+] phpBB3 PortalXL
 // Do not display signature panel if not authed to do so
 if (!$auth->acl_get('u_sig'))
 {
 	$module->set_display('profile', 'signature', false);
 }
-
+// [-] phpBB3 PortalXL
+	
 // Select the active module
 $module->set_active($id, $mode);
 

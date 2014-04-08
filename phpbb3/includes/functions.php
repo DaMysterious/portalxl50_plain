@@ -3114,10 +3114,13 @@ function login_box($redirect = '', $l_explain = '', $l_success = '', $admin = fa
 				return;
 			}
 
+			// [+] phpBB3 PortalXL
 			if ($admin)
 			{
 				redirect($redirect);
 			}
+			// [-] phpBB3 PortalXL
+
 			
 			$redirect = meta_refresh(3, $redirect);
 			trigger_error($message . '<br /><br />' . sprintf($l_redirect, '<a href="' . $redirect . '">', '</a>'));
@@ -4766,9 +4769,9 @@ function page_header($page_title = '', $display_online_list = true, $item_id = 0
 		header('X-PHPBB-IS-BOT: yes');
 	}
 
-	// [+] phpBB3 Portal XL
+	// [+] phpBB3 PortalXL
 	portal_init();
-	// [-] phpBB3 Portal XL
+	// [-] phpBB3 PortalXL
 
 	return;
 }
@@ -4780,12 +4783,12 @@ function page_footer($run_cron = true)
 {
 	global $db, $config, $template, $user, $auth, $cache, $starttime, $phpbb_root_path, $phpEx;
 
-	// [+] phpBB3 Portal XL footer
+	// [+] phpBB3 PortalXL
 	global $portal_init;
 	if (defined('PORTAL')) {
 		portal_end();
 	}
-	// [-] phpBB3 Portal XL footer
+	// [-] phpBB3 PortalXL
 
 	// Output page creation time
 	if (defined('DEBUG'))

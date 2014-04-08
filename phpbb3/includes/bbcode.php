@@ -418,9 +418,11 @@ class bbcode
 				'i_close'	=> '</span>',
 				'u_open'	=> '<span style="text-decoration: underline">',
 				'u_close'	=> '</span>',
+// [+] phpBB3 PortalXL
 //				'img'		=> '<img src="$1" alt="' . $user->lang['IMAGE'] . '" />', // default phpBB3 value
 				'img'		=> '<img resizemod="on" onload="rmw_img_loaded(this)" src="$1" alt="' . $user->lang['IMAGE'] . '" />', // default phpBB3 value including resize of images
 //				'img'       => '<a class="highslide" href="$1" onclick="return hs.expand(this)"><img src="$1" resizemod="on" onload="rmw_img_loaded(this)" alt="' . $user->lang['IMAGE'] . '" /></a>', // resize of images including Highslide image management
+// [-] phpBB3 PortalXL
 				'size'		=> '<span style="font-size: $1%; line-height: normal">$2</span>',
 				'color'		=> '<span style="color: $1">$2</span>',
 				'email'		=> '<a href="mailto:$1">$2</a>'

@@ -146,6 +146,7 @@ function adm_page_header($page_title)
 		'S_CONTENT_FLOW_END'	=> ($user->lang['DIRECTION'] == 'ltr') ? 'right' : 'left',
 	));
 
+	// [+] phpBB3 PortalXL
 	if(defined('PORTAL'))
 	{			
 		$template->assign_vars(array(
@@ -154,6 +155,7 @@ function adm_page_header($page_title)
 			'U_PORTAL'		=> append_sid("{$phpbb_root_path}portal.$phpEx")
 			));
 	}
+	// [-] phpBB3 PortalXL
 
 	// application/xhtml+xml not used because of IE
 	header('Content-type: text/html; charset=UTF-8');
@@ -417,6 +419,7 @@ function validate_config_vars($config_vars, &$cfg_array, &$error)
 				// the column is a VARCHAR
 				$validator[$max] = (isset($validator[$max])) ? min(255, $validator[$max]) : 255;
 
+				// [+] phpBB3 PortalXL
 				if(defined('PORTAL'))
 				{			
 					$validator[$max] = ($config_name == "portal_welcome_intro") ? 2000 : $validator[$max];
@@ -428,6 +431,7 @@ function validate_config_vars($config_vars, &$cfg_array, &$error)
 					$validator[$max] = ($config_name == "portal_weather_alternate_url1") ? 1000 : $validator[$max];
 					$validator[$max] = ($config_name == "portal_weather_alternate_url2") ? 1000 : $validator[$max];
 				}
+				// [-] phpBB3 PortalXL
 
 				if (isset($validator[$min]) && $length < $validator[$min])
 				{

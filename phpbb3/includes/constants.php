@@ -281,8 +281,8 @@ define('ZEBRA_TABLE',				$table_prefix . 'zebra');
 
 /*
 *
-* @package define database tables for phpBB3 Portal XL 5.0
-* @copyright (c) 2009 Portal XL 5.0 Group
+* @package define database tables for phpBB3 PortalXL 5.0
+* @copyright (c) 2014 PortalXL 5.0 Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License 
 *
 */

@@ -138,6 +138,7 @@ $template->assign_vars(array(
 // Output page
 page_header($user->lang['INDEX']);
 
+// [+] phpBB3 PortalXL
 /*
 * include portal block management if portal index/viewtopic is active
 */
@@ -148,6 +149,10 @@ if (defined('PORTAL_INDEX_PAGE')) {
 	include_once($phpbb_root_path . 'portal/includes/index_blocks.' . $phpEx);
 	include_once($phpbb_root_path . 'portal/includes/functions_blocks_index.' . $phpEx);
 }
+
+//$template->set_filenames(array(
+//	'body' => 'index_body.html')
+//);
 
 /*
 * switch template if the portal index/viewtopic is active
@@ -164,6 +169,7 @@ $template->set_filenames(array(
 	'body' => 'index_body.html',
 	));
 }
+// [-] phpBB3 PortalXL
 
 page_footer();
 

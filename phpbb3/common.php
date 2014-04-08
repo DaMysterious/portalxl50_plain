@@ -99,7 +99,9 @@ require($phpbb_root_path . 'includes/constants.' . $phpEx);
 require($phpbb_root_path . 'includes/db/' . $dbms . '.' . $phpEx);
 require($phpbb_root_path . 'includes/utf/utf_tools.' . $phpEx);
 
+// [+] phpBB3 PortalXL
 require($phpbb_root_path . 'portal/includes/functions_portal.'.$phpEx);
+// [-] phpBB3 PortalXL
 
 // Set PHP error handler to ours
 set_error_handler(defined('PHPBB_MSG_HANDLER') ? PHPBB_MSG_HANDLER : 'msg_handler');
@@ -120,8 +122,10 @@ unset($dbpasswd);
 // Grab global variables, re-cache if necessary
 $config = $cache->obtain_config();
 
+// [+] phpBB3 PortalXL
 // Grab global portal variables, re-cache if necessary
 $portal_config = $cache->obtain_portal_config();
+// [-] phpBB3 PortalXL
 
 // Add own hook handler
 require($phpbb_root_path . 'includes/hooks/index.' . $phpEx);

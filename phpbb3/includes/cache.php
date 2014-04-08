@@ -68,7 +68,7 @@ class cache extends acm
 	}
 
 	/**
-	* Obtain portal config
+	* Obtain PortalXL config
 	*/
 	function obtain_portal_config()
 	{

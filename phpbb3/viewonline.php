@@ -1,13 +1,10 @@
 <?php
 /**
 *
-* This file is part of the phpBB Forum Software package.
-*
-* @copyright (c) phpBB Limited <https://www.phpbb.com>
-* @license GNU General Public License, version 2 (GPL-2.0)
-*
-* For full copyright and license information, please see
-* the docs/CREDITS.txt file.
+* @package phpBB3
+* @version $Id$
+* @copyright (c) 2005 phpBB Group
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
@@ -30,7 +27,7 @@ $session_id	= request_var('s', '');
 $start		= request_var('start', 0);
 $sort_key	= request_var('sk', 'b');
 $sort_dir	= request_var('sd', 'd');
-$show_guests	= ($config['load_online_guests']) ? request_var('sg', 0) : 0;
+$show_guests= ($config['load_online_guests']) ? request_var('sg', 0) : 0;
 
 // Can this user view profiles/memberlist?
 if (!$auth->acl_gets('u_viewprofile', 'a_user', 'a_useradd', 'a_userdel'))
@@ -42,9 +39,6 @@ if (!$auth->acl_gets('u_viewprofile', 'a_user', 'a_useradd', 'a_userdel'))
 
 	login_box('', $user->lang['LOGIN_EXPLAIN_VIEWONLINE']);
 }
-
-$pagination = $phpbb_container->get('pagination');
-$viewonline_helper = $phpbb_container->get('viewonline_helper');
 
 $sort_key_text = array('a' => $user->lang['SORT_USERNAME'], 'b' => $user->lang['SORT_JOINED'], 'c' => $user->lang['SORT_LOCATION']);
 $sort_key_sql = array('a' => 'u.username_clean', 'b' => 's.session_time', 'c' => 's.session_page');
@@ -103,10 +97,9 @@ $guest_counter = 0;
 // Get number of online guests (if we do not display them)
 if (!$show_guests)
 {
-	switch ($db->get_sql_layer())
+	switch ($db->sql_layer)
 	{
 		case 'sqlite':
-		case 'sqlite3':
 			$sql = 'SELECT COUNT(session_ip) as num_guests
 				FROM (
 					SELECT DISTINCT session_ip
@@ -129,33 +122,13 @@ if (!$show_guests)
 }
 
 // Get user list
-$sql_ary = array(
-	'SELECT'	=> 'u.user_id, u.username, u.username_clean, u.user_type, u.user_colour, s.session_id, s.session_time, s.session_page, s.session_ip, s.session_browser, s.session_viewonline, s.session_forum_id',
-	'FROM'		=> array(
-		USERS_TABLE		=> 'u',
-		SESSIONS_TABLE	=> 's',
-	),
-	'WHERE'		=> 'u.user_id = s.session_user_id
+$sql = 'SELECT u.user_id, u.username, u.username_clean, u.user_type, u.user_colour, s.session_id, s.session_time, s.session_page, s.session_ip, s.session_browser, s.session_viewonline, s.session_forum_id
+	FROM ' . USERS_TABLE . ' u, ' . SESSIONS_TABLE . ' s
+	WHERE u.user_id = s.session_user_id
 		AND s.session_time >= ' . (time() - ($config['load_online_time'] * 60)) .
-		((!$show_guests) ? ' AND s.session_user_id <> ' . ANONYMOUS : ''),
-	'ORDER_BY'	=> $order_by,
-);
-
-/**
-* Modify the SQL query for getting the user data to display viewonline list
-*
-* @event core.viewonline_modify_sql
-* @var	array	sql_ary			The SQL array
-* @var	bool	show_guests		Do we display guests in the list
-* @var	int		guest_counter	Number of guests displayed
-* @var	array	forum_data		Array with forum data
-* @since 3.1.0-a1
-* @change 3.1.0-a2 Added vars guest_counter and forum_data
-*/
-$vars = array('sql_ary', 'show_guests', 'guest_counter', 'forum_data');
-extract($phpbb_dispatcher->trigger_event('core.viewonline_modify_sql', compact($vars)));
-
-$result = $db->sql_query($db->sql_build_query('SELECT', $sql_ary));
+		((!$show_guests) ? ' AND s.session_user_id <> ' . ANONYMOUS : '') . '
+	ORDER BY ' . $order_by;
+$result = $db->sql_query($sql);
 
 $prev_id = $prev_ip = $user_list = array();
 $logged_visible_online = $logged_hidden_online = $counter = 0;
@@ -214,7 +187,11 @@ while ($row = $db->sql_fetchrow($result))
 		continue;
 	}
 
-	$on_page = $viewonline_helper->get_user_page($row['session_page']);
+	preg_match('#^([a-z0-9/_-]+)#i', $row['session_page'], $on_page);
+	if (!sizeof($on_page))
+	{
+		$on_page[1] = '';
+	}
 
 	switch ($on_page[1])
 	{
@@ -223,7 +200,7 @@ while ($row = $db->sql_fetchrow($result))
 			$location_url = append_sid("{$phpbb_root_path}index.$phpEx");
 		break;
 
-		case $phpbb_adm_relative_path . 'index':
+		case 'adm/index':
 			$location = $user->lang['ACP'];
 			$location_url = append_sid("{$phpbb_root_path}index.$phpEx");
 		break;
@@ -295,21 +272,8 @@ while ($row = $db->sql_fetchrow($result))
 		break;
 
 		case 'memberlist':
+			$location = (strpos($row['session_page'], 'mode=viewprofile') !== false) ? $user->lang['VIEWING_MEMBER_PROFILE'] : $user->lang['VIEWING_MEMBERS'];
 			$location_url = append_sid("{$phpbb_root_path}memberlist.$phpEx");
-
-			if (strpos($row['session_page'], 'mode=viewprofile') !== false)
-			{
-				$location = $user->lang['VIEWING_MEMBER_PROFILE'];
-			}
-			else if (strpos($row['session_page'], 'mode=contactadmin') !== false)
-			{
-				$location = $user->lang['VIEWING_CONTACT_ADMIN'];
-				$location_url = append_sid("{$phpbb_root_path}memberlist.$phpEx", 'mode=contactadmin');
-			}
-			else
-			{
-				$location = $user->lang['VIEWING_MEMBERS'];
-			}
 		break;
 
 		case 'mcp':
@@ -364,22 +328,7 @@ while ($row = $db->sql_fetchrow($result))
 		break;
 	}
 
-	/**
-	* Overwrite the location's name and URL, which are displayed in the list
-	*
-	* @event core.viewonline_overwrite_location
-	* @var	array	on_page			File name and query string
-	* @var	array	row				Array with the users sql row
-	* @var	string	location		Page name to displayed in the list
-	* @var	string	location_url	Page url to displayed in the list
-	* @var	array	forum_data		Array with forum data
-	* @since 3.1.0-a1
-	* @change 3.1.0-a2 Added var forum_data
-	*/
-	$vars = array('on_page', 'row', 'location', 'location_url', 'forum_data');
-	extract($phpbb_dispatcher->trigger_event('core.viewonline_overwrite_location', compact($vars)));
-
-	$template_row = array(
+	$template->assign_block_vars('user_row', array(
 		'USERNAME' 			=> $row['username'],
 		'USERNAME_COLOUR'	=> $row['user_colour'],
 		'USERNAME_FULL'		=> $username_full,
@@ -396,38 +345,50 @@ while ($row = $db->sql_fetchrow($result))
 		'S_USER_HIDDEN'		=> $s_user_hidden,
 		'S_GUEST'			=> ($row['user_id'] == ANONYMOUS) ? true : false,
 		'S_USER_TYPE'		=> $row['user_type'],
-	);
-
-	/**
-	* Modify viewonline template data before it is displayed in the list
-	*
-	* @event core.viewonline_modify_user_row
-	* @var	array	on_page			File name and query string
-	* @var	array	row				Array with the users sql row
-	* @var	array	forum_data		Array with forum data
-	* @var	array	template_row	Array with template variables for the user row
-	* @since 3.1.0-RC4
-	*/
-	$vars = array('on_page', 'row', 'forum_data', 'template_row');
-	extract($phpbb_dispatcher->trigger_event('core.viewonline_modify_user_row', compact($vars)));
-
-	$template->assign_block_vars('user_row', $template_row);
+	));
 }
 $db->sql_freeresult($result);
 unset($prev_id, $prev_ip);
 
-$order_legend = ($config['legend_sort_groupname']) ? 'group_name' : 'group_legend';
+// Generate reg/hidden/guest online text
+$vars_online = array(
+	'REG'	=> array('logged_visible_online', 'l_r_user_s'),
+	'HIDDEN'=> array('logged_hidden_online', 'l_h_user_s'),
+	'GUEST'	=> array('guest_counter', 'l_g_user_s')
+);
+
+foreach ($vars_online as $l_prefix => $var_ary)
+{
+	switch ($$var_ary[0])
+	{
+		case 0:
+			$$var_ary[1] = $user->lang[$l_prefix . '_USERS_ZERO_ONLINE'];
+		break;
+
+		case 1:
+			$$var_ary[1] = $user->lang[$l_prefix . '_USER_ONLINE'];
+		break;
+
+		default:
+			$$var_ary[1] = $user->lang[$l_prefix . '_USERS_ONLINE'];
+		break;
+	}
+}
+unset($vars_online);
+
+$pagination = generate_pagination(append_sid("{$phpbb_root_path}viewonline.$phpEx", "sg=$show_guests&amp;sk=$sort_key&amp;sd=$sort_dir"), $counter, $config['topics_per_page'], $start);
+
 // Grab group details for legend display
 if ($auth->acl_gets('a_group', 'a_groupadd', 'a_groupdel'))
 {
-	$sql = 'SELECT group_id, group_name, group_colour, group_type, group_legend
+	$sql = 'SELECT group_id, group_name, group_colour, group_type
 		FROM ' . GROUPS_TABLE . '
-		WHERE group_legend > 0
-		ORDER BY ' . $order_legend . ' ASC';
+		WHERE group_legend = 1
+		ORDER BY group_name ASC';
 }
 else
 {
-	$sql = 'SELECT g.group_id, g.group_name, g.group_colour, g.group_type, g.group_legend
+	$sql = 'SELECT g.group_id, g.group_name, g.group_colour, g.group_type
 		FROM ' . GROUPS_TABLE . ' g
 		LEFT JOIN ' . USER_GROUP_TABLE . ' ug
 			ON (
@@ -435,9 +396,9 @@ else
 				AND ug.user_id = ' . $user->data['user_id'] . '
 				AND ug.user_pending = 0
 			)
-		WHERE g.group_legend > 0
+		WHERE g.group_legend = 1
 			AND (g.group_type <> ' . GROUP_HIDDEN . ' OR ug.user_id = ' . $user->data['user_id'] . ')
-		ORDER BY g.' . $order_legend . ' ASC';
+		ORDER BY g.group_name ASC';
 }
 $result = $db->sql_query($sql);
 
@@ -458,15 +419,13 @@ $db->sql_freeresult($result);
 // Refreshing the page every 60 seconds...
 meta_refresh(60, append_sid("{$phpbb_root_path}viewonline.$phpEx", "sg=$show_guests&amp;sk=$sort_key&amp;sd=$sort_dir&amp;start=$start"));
 
-$start = $pagination->validate_start($start, $config['topics_per_page'], $counter);
-$base_url = append_sid("{$phpbb_root_path}viewonline.$phpEx", "sg=$show_guests&amp;sk=$sort_key&amp;sd=$sort_dir");
-$pagination->generate_template_pagination($base_url, 'pagination', 'start', $counter, $config['topics_per_page'], $start);
-
 // Send data to template
 $template->assign_vars(array(
-	'TOTAL_REGISTERED_USERS_ONLINE'	=> $user->lang('REG_USERS_ONLINE', (int) $logged_visible_online, $user->lang('HIDDEN_USERS_ONLINE', (int) $logged_hidden_online)),
-	'TOTAL_GUEST_USERS_ONLINE'		=> $user->lang('GUEST_USERS_ONLINE', (int) $guest_counter),
+	'TOTAL_REGISTERED_USERS_ONLINE'	=> sprintf($l_r_user_s, $logged_visible_online) . sprintf($l_h_user_s, $logged_hidden_online),
+	'TOTAL_GUEST_USERS_ONLINE'		=> sprintf($l_g_user_s, $guest_counter),
 	'LEGEND'						=> $legend,
+	'PAGINATION'					=> $pagination,
+	'PAGE_NUMBER'					=> on_page($counter, $config['topics_per_page'], $start),
 
 	'U_SORT_USERNAME'		=> append_sid("{$phpbb_root_path}viewonline.$phpEx", 'sk=a&amp;sd=' . (($sort_key == 'a' && $sort_dir == 'a') ? 'd' : 'a') . '&amp;sg=' . ((int) $show_guests)),
 	'U_SORT_UPDATED'		=> append_sid("{$phpbb_root_path}viewonline.$phpEx", 'sk=b&amp;sd=' . (($sort_key == 'b' && $sort_dir == 'a') ? 'd' : 'a') . '&amp;sg=' . ((int) $show_guests)),
@@ -474,9 +433,8 @@ $template->assign_vars(array(
 
 	'U_SWITCH_GUEST_DISPLAY'	=> append_sid("{$phpbb_root_path}viewonline.$phpEx", 'sg=' . ((int) !$show_guests)),
 	'L_SWITCH_GUEST_DISPLAY'	=> ($show_guests) ? $user->lang['HIDE_GUESTS'] : $user->lang['DISPLAY_GUESTS'],
-	'S_SWITCH_GUEST_DISPLAY'	=> ($config['load_online_guests']) ? true : false,
-	'S_VIEWONLINE'				=> true,
-));
+	'S_SWITCH_GUEST_DISPLAY'	=> ($config['load_online_guests']) ? true : false)
+);
 
 // We do not need to load the who is online box here. ;)
 $config['load_online'] = false;

@@ -3,9 +3,8 @@
 *
 * @name acp_portal_xl.php [English]
 * @package phpBB3 Portal XL 5.0
-* @version $Id: acp_portal_xl.php,v 1.2 2009/05/15 22:32:06 portalxl group Exp $
 *
-* @copyright (c) 2007, 2014 Portal XL Group
+* @copyright (c) 2007, 2015 Portal XL Group
 * @license http://opensource.org/licenses/gpl-2.0.php The GNU General Public License (GPL)
 *
 */
@@ -47,9 +46,9 @@ $lang = array_merge($lang, array(
 	<h3>Author Notes</h3>
 	<p>Creating, maintaining and updating this MOD required/requires a lot of time and effort.<br />
 	   If you appreciate PortalXL and feel the desire to express your thanks through a donation this would be greatly appreciated.<br /> 
-	   PortalXL\'s Paypal ID is <strong>portalxl@xs4all.nl</strong>, or visit our special PortalXL donation page <a href="http://www.portalxl.nl/PORTAL_XL_Paypal_Donation.html" target="_blank">here</a>.<br /><br />
+	   PortalXL\'s Paypal ID is <strong>helmut.kicken@ziggo.nl</strong>, or visit our special PortalXL donation page <a href="http://www.portalxl.info/PORTAL_XL_Paypal_Donation.html" target="_blank">here</a>.<br /><br />
 	   The suggested minimum donation amount for this MOD is Euro 25.00 (any higher amount will help more).<br />
-	   If you are a registered user of the portalxl.nl forum, please leave your forum name/alias as comment so your level can be raised up in exchange.</p>
+	   If you are a registered user of the portalxl.info forum, please leave your forum name/alias as comment so your level can be raised up in exchange.</p>
 	</div><p>',
 
 	// announcements

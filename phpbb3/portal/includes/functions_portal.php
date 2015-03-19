@@ -5,7 +5,7 @@
 * @package phpBB3 Portal XL 5.0
 * @version $Id: functions_portal.php,v 1.5 2011/07/13 portalxl group Exp $
 *
-* @copyright (c) 2007, 2014 PortalXL Group
+* @copyright (c) 2007, 2015 PortalXL Group
 * @license http://opensource.org/licenses/gpl-2.0.php The GNU General Public License (GPL)
 *
 */
@@ -272,16 +272,16 @@ function portal_init()
 * If you do not like (we will not provide any support if our credit link is removed) to put this link, 
 * you should at least provide us with one visible (can be small but visible) link on your home page or 
 * your Portal Index using this code for example :
-* <a href="http://www.portalxl.nl/forum/" title="Portal XL">Portal XL</a>
+* <a href="http://www.portalxl.info/forum/" title="Portal XL">Portal XL</a>
 */
 function portal_end($portal_return = false, $portal_img = true) 
 {
 	global $user, $portal_config, $phpbb_root_path;
 	if ($portal_img) 
 	{
-		$output = '<br /><span style="padding-top:5px; text-align: middle"><a href="http://www.portalxl.nl/forum/" title="' . $user->lang['PORTAL_VERSION'] . $portal_config['portal_version'] . '"><img src="' . $phpbb_root_path . 'portal/images/phpbb-portal-xl40.png" alt="' . $user->lang['PORTAL_VERSION'] . $portal_config['portal_version'] . '" /></a></span>';
+		$output = '<br /><span style="padding-top:5px; text-align: middle"><a href="http://www.portalxl.info/forum/" title="' . $user->lang['PORTAL_VERSION'] . $portal_config['portal_version'] . '"><img src="' . $phpbb_root_path . 'portal/images/phpbb-portal-xl40.png" alt="' . $user->lang['PORTAL_VERSION'] . $portal_config['portal_version'] . '" /></a></span>';
 	} else {
-		$output = '<span style="padding-top:5px" text-align: middle"><a href="http://www.portalxl.nl/forum/" title="' . $user->lang['PORTAL_VERSION'] . $portal_config['portal_version'] . '">' . $user->lang['PORTAL_VERSION'] . $portal_config['portal_version'] . $user->lang['PORTAL_COPY'] . '</a></span>';
+		$output = '<span style="padding-top:5px" text-align: middle"><a href="http://www.portalxl.info/forum/" title="' . $user->lang['PORTAL_VERSION'] . $portal_config['portal_version'] . '">' . $user->lang['PORTAL_VERSION'] . $portal_config['portal_version'] . $user->lang['PORTAL_COPY'] . '</a></span>';
 	}
 	if ($portal_return) 
 	{

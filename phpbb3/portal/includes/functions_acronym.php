@@ -5,7 +5,7 @@
 * @package phpBB3 Portal XL 5.0
 * @version $Id: functions_acronym.php,v 1.4 2009/12/19 portalxl group Exp $
 *
-* @copyright (c) 2007, 2014 PortalXL Group
+* @copyright (c) 2007, 2015 PortalXL Group
 * @license http://opensource.org/licenses/gpl-2.0.php The GNU General Public License (GPL)
 *
 */
@@ -35,7 +35,7 @@ function portal_acronyms($message)
    $message = str_replace('higshlide', '<a href="http://highslide.com/" title="Highslide JS is an open source image, media and gallery viewer written in JavaScript.">Highslide JS</a>', $message);
    $message = str_replace('CHMOD', '<a href="http://en.wikipedia.org/wiki/Chmod" title="CHMOD command in Unix and Unix-like environments helps users or administrators change file and directory permissions and modes. CHMOD is an abbreviation for CHange MODe.">CHMOD</a>', $message);
    $message = str_replace('chmod', '<a href="http://en.wikipedia.org/wiki/Chmod" title="CHMOD is an abbreviation for CHange MODe in Unix and Unix-like environments.">chmod</a>', $message);
-//   $message = str_replace('portal', '<a href="http://www.portalxl.nl/forum/" title="Your insane crazy ass-kicking portal system for phpBB 3.0.x">Portal XL 5.0</a>', $message);
+//   $message = str_replace('portal', '<a href="http://www.portalxl.info/forum/" title="Your insane crazy ass-kicking portal system for phpBB 3.0.x">Portal XL 5.0</a>', $message);
 
    return($message);
 }

@@ -77,7 +77,7 @@ $lang = array_merge($lang, array(
 		<p>You have now successfully installed Portal XL 5.0 %1$s. From here, you have several options as to what to do with your newly installed Portal XL:</p>
 		<p><strong style="text-transform: uppercase; font-size:13px; color: #FF0000;">Note:</strong></span><br /><br /><span style="font-size:13px; color: #FF0000;">Before proceeding you must have copied/uploaded all content from within the Portal XL main archive directory <strong>\root\</strong> to your forum root.</span></p>
 		<h2>Go live with your Portal XL!</h2>
-		<p>Clicking the button below will take you to your Administration Control Panel (ACP). Take some time to examine the options available to you. Remember that help is available online via the <a href="http://www.portalxl.nl/forum/">Portal XL Home</a> and the <a href="http://www.portalxl.nl/forum/viewforum.php?f=1">support forums</a> for Portal XL 4.0 Premod RC5, or <a href="http://www.portalxl.nl/forum/viewforum.php?f=44">support forums</a> for Portal XL 5.0 Plain.</p><p><strong>Please now delete, move or rename the install directory before you use your board. If this directory is still present, only the Administration Control Panel (ACP) will be accessible.</strong></p>',
+		<p>Clicking the button below will take you to your Administration Control Panel (ACP). Take some time to examine the options available to you. Remember that help is available online via the <a href="http://www.portalxl.info/forum/">Portal XL Home</a> and the <a href="http://www.portalxl.info/forum/viewforum.php?f=1">support forums</a> for Portal XL 4.0 Premod RC5, or <a href="http://www.portalxl.info/forum/viewforum.php?f=44">support forums</a> for Portal XL 5.0 Plain.</p><p><strong>Please now delete, move or rename the install directory before you use your board. If this directory is still present, only the Administration Control Panel (ACP) will be accessible.</strong></p>',
 
 	'PORTAL_INSTALL_NOT_POSSIBLE'	=> '<strong>Installation not possible!</strong><br /><br />The script found an existing installation, so you can not use the installation script again.',
 
@@ -101,7 +101,7 @@ $lang = array_merge($lang, array(
 	'PORTAL_SQL_UPDATE_DONE'		=> '<strong>Done database action:</strong><br />',
 
 	'PORTAL_SUB_SUPPORT'			=> 'General Portal Support',
-	'PORTAL_SUPPORT_BODY'			=> 'Support will be provided for the current stable release of Portal XL 5.0, free of charge. <p>This includes:</p><p><ul><li>installation</li><li>configuration</li><li>technical questions</li><li>problems relating to potential bugs in the software</li></ul></p><p>Usage of Beta-Versions is limited recommended. If there are updates, it\'s recommended to update as soon as possible.</p><p>Support is given on: </p><ul><li><a href="http://www.portalxl.nl/forum/" target="_blank">www.portalxl.nl</a></li></ul><br />As we are unable to know what is changed/modded to your existing phpBB3 setup before, we are not able in any way to support custom changes. Remember, using this package can lead to lost of already changed code or added mod\'s.',
+	'PORTAL_SUPPORT_BODY'			=> 'Support will be provided for the current stable release of Portal XL 5.0, free of charge. <p>This includes:</p><p><ul><li>installation</li><li>configuration</li><li>technical questions</li><li>problems relating to potential bugs in the software</li></ul></p><p>Usage of Beta-Versions is limited recommended. If there are updates, it\'s recommended to update as soon as possible.</p><p>Support is given on: </p><ul><li><a href="http://www.portalxl.info/forum/" target="_blank">www.portalxl.info</a></li></ul><br />As we are unable to know what is changed/modded to your existing phpBB3 setup before, we are not able in any way to support custom changes. Remember, using this package can lead to lost of already changed code or added mod\'s.',
 
 	// Portal XL Update Procedure
 	'PORTAL_UPDATE'					=> 'Portal XL Update',
@@ -274,7 +274,7 @@ $lang = array_merge($lang, array(
 		<p>The recommended way of updating your installation listed here is only valid for the latest package. You are also able to update your installation using the methods listed within the \docs\PORTAL_XL_INSTALL.html document. The steps for updating Portal XL are:</p>
 
 		<ul style="margin-left: 20px; font-size: 1.1em;">
-			<li>Go to the <a href="http://www.portalxl.nl/forum/" title="http://www.portalxl.nl/forum/">Portal XL downloads page</a> and download the "Latest Package" archive.<br /></li>
+			<li>Go to the <a href="http://www.portalxl.info/forum/" title="http://www.portalxl.info/forum/">Portal XL downloads page</a> and download the "Latest Package" archive.<br /></li>
 			<li>Unpack the archive.<br /></li>
 			<li>Upload the complete \root\ folder (retain directory structure) to your phpBB root directory (where your config.php file is).<br /></li>
 			<li>Browse to \install\index.php to start the installation script and choose tab "Update"<br /></li>

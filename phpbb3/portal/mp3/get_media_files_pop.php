@@ -10,7 +10,7 @@
 
 // refer to external a playlist from an external server to the players.
 //
-// readfile("http://www.portalxl.nl/forum/portal/mp3/playlist.xml");
+// readfile("http://www.portalxl.info/forum/portal/mp3/playlist.xml");
 //
 
 /**
